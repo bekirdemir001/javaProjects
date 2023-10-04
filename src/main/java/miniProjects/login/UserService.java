@@ -38,21 +38,39 @@ public class UserService {
 
         //Get email
         String email;
-        boolean isValid;
+        boolean isValidEmail;
         boolean existEmail;
         do {
             System.out.println("Enter Your Email");
             email = scanner.nextLine().trim();
-            isValid = validateEmail(email);
+            isValidEmail = validateEmail(email);
 
             existEmail = emailList.contains(email);
             if (existEmail){
-                isValid = false;
+                isValidEmail = false;
                 System.out.println("This email has been used before. Please try a new email");
             }
+        }while (!isValidEmail);
 
-        }while (!isValid);
+        //Get password
+        String password;
+        boolean isValidPassword;
 
+        do {
+            System.out.println("Enter Your Password");
+            password = scanner.nextLine();
+            isValidPassword = validatePassword(password);
+        }while (!isValidPassword);
+
+        //Create users and add their information into the lists
+        User user = new User(name, username, email, password);
+        usernameList.add(username);
+        emailList.add(email);
+        passwordList.add(password);
+
+        System.out.println(user);
+        System.out.println("Congratulations, your registration has been completed.");
+        System.out.println("You can log in to the system with your username or email and password.");
     }
 
     public static boolean validateEmail(String email){
@@ -86,5 +104,38 @@ public class UserService {
         return isValid;
     }
 
+
+    public static boolean validatePassword(String password){
+        boolean isValidPassword;
+
+        boolean space = password.contains(" ");
+        boolean lengthGreaterThan6 = password.length() >= 6;
+        boolean existUppercase = password.replaceAll("[^A-Z]", "").length()>0;
+        boolean existLowercase = password.replaceAll("[^a-z]", "").length()>0;
+        boolean existDigit = password.replaceAll("[^0-9]", "").length()>0;
+        boolean existSymbol = password.replaceAll("[\\P{Punct}]", "").length()>0;
+
+        if (space){
+            System.out.println("Password has no space");
+        } else if (!lengthGreaterThan6) {
+            System.out.println("Password contains at least 6 character");
+        }else if (!existUppercase) {
+            System.out.println("Password contains at least 1 uppercase");
+        }else if (!existLowercase) {
+            System.out.println("Password contains at least 1 lowercase");
+        }else if (!existDigit) {
+            System.out.println("Password contains at least 1 digit");
+        }else if (!existSymbol) {
+            System.out.println("Password contains at least 1 symbol");
+        }
+
+        isValidPassword = !space && lengthGreaterThan6 && existUppercase && existLowercase && existDigit && existSymbol;
+
+        if (!isValidPassword){
+            System.out.println("Please try again");
+        }
+
+        return isValidPassword;
+    }
 
 }
