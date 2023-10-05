@@ -32,12 +32,7 @@ public class LoginMain {
      */
 
     public static void main(String[] args) {
-
         start();
-
-
-
-
     }
 
     public static void start(){
@@ -54,7 +49,7 @@ public class LoginMain {
                     userService.register();
                     break;
                 case "2":
-
+                    userService.login();
                     break;
                 case "3":
                     System.out.println("***** Have a Nice Day *****");
@@ -63,8 +58,5 @@ public class LoginMain {
                     System.out.println("You have logged in incorrectly. Please try again");
             }
         }while (!select.equals("3"));
-
     }
-
-
 }

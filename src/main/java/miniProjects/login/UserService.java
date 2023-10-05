@@ -73,6 +73,40 @@ public class UserService {
         System.out.println("You can log in to the system with your username or email and password.");
     }
 
+    public void login(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter username or email");
+        String usernameOrEmail = scanner.nextLine();
+
+        boolean isEmail = emailList.contains(usernameOrEmail);
+        boolean isUsername = usernameList.contains(usernameOrEmail);
+
+        if (isEmail || isUsername){
+            while (true){
+                System.out.println("Enter your password");
+                String password = scanner.nextLine();
+
+                int index;
+                if (isUsername){
+                    index = usernameList.indexOf(usernameOrEmail);
+                } else {
+                    index = emailList.indexOf(usernameOrEmail);
+                }
+
+                if (passwordList.get(index).equals(password)){
+                    System.out.println("You logged in to the system successfully");
+                    break;
+                }else {
+                    System.out.println("You entered wrong password! Please try again");
+                }
+            }
+        }else {
+            System.out.println("The user registered to the system was not found!");
+            System.out.println("Please check your credentials or sign in");
+        }
+
+    }
+
     public static boolean validateEmail(String email){
         boolean isValid;
 
