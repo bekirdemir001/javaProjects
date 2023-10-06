@@ -10,7 +10,6 @@ public class UserService {
     List<String> passwordList = new ArrayList<>();
 
     public void showMenu(){
-
         System.out.println("***** WELCOME *****");
         System.out.println("1. Sign In");
         System.out.println("2. Login");
@@ -82,6 +81,7 @@ public class UserService {
         boolean isUsername = usernameList.contains(usernameOrEmail);
 
         if (isEmail || isUsername){
+            int counter = 5;
             while (true){
                 System.out.println("Enter your password");
                 String password = scanner.nextLine();
@@ -97,7 +97,14 @@ public class UserService {
                     System.out.println("You logged in to the system successfully");
                     break;
                 }else {
-                    System.out.println("You entered wrong password! Please try again");
+                    counter--;
+                    if (counter>0){
+                        System.out.println("You entered wrong password! Please try again");
+                        System.out.println("Your remaining number of attempts: " + counter);
+                    }else {
+                        System.out.println("There is no remaining attempt. Good Bye!");
+                        break;
+                    }
                 }
             }
         }else {
