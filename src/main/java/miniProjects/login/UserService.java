@@ -13,7 +13,7 @@ public class UserService {
         System.out.println("***** WELCOME *****");
         System.out.println("1. Sign In");
         System.out.println("2. Login");
-        System.out.println("3. Logout");
+        System.out.println("3. Exit");
         System.out.println("Your selection: ");
     }
 
@@ -70,6 +70,8 @@ public class UserService {
         System.out.println(user);
         System.out.println("Congratulations, your registration has been completed.");
         System.out.println("You can log in to the system with your username or email and password.");
+
+        scanner.close();
     }
 
     public void login(){
@@ -112,6 +114,7 @@ public class UserService {
             System.out.println("Please check your credentials or sign in");
         }
 
+        scanner.close();
     }
 
     public static boolean validateEmail(String email){
