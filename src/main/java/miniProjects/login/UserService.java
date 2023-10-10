@@ -1,5 +1,9 @@
 package miniProjects.login;
 
+import miniProjects.DatabaseUtilities;
+import miniProjects.ReusableMethods;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +21,8 @@ public class UserService {
         System.out.println("Your selection: ");
     }
 
-    public void register(){
+    public void register() throws ClassNotFoundException, SQLException {
+
         //Get name
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Your Name and Surname");
@@ -67,11 +72,41 @@ public class UserService {
         emailList.add(email);
         passwordList.add(password);
 
-        System.out.println(user);
-        System.out.println("Congratulations, your registration has been completed.");
-        System.out.println("You can log in to the system with your username or email and password.");
+        //Get connection to the local database and add users information into the local database
+        List<User> users = new ArrayList<>();
+        users.add(new User(name, username, email, password));
+        Connection con = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","Bekrarum3401-");
 
-        scanner.close();
+        Statement st = con.createStatement();
+
+        String sql = "INSERT INTO users VALUES (?, ?, ?, ?)";
+
+
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+        for (User each : users) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+
+            preparedStatement.addBatch();
+
+        }
+        preparedStatement.executeBatch();
+
+        con.close();
+        st.close();
+        preparedStatement.close();
+
+        System.out.println("-------------------------------------------------------------------------");
+        ReusableMethods.slowPrint("Congratulations, your registration has been completed.", 50);
+        System.out.println();
+        ReusableMethods.slowPrint("You can log in to the system with your username or email and password.", 50);
+        System.out.println();
+        System.out.println("-------------------------------------------------------------------------");
+
     }
 
     public void login(){
@@ -114,7 +149,6 @@ public class UserService {
             System.out.println("Please check your credentials or sign in");
         }
 
-        scanner.close();
     }
 
     public static boolean validateEmail(String email){
@@ -180,6 +214,14 @@ public class UserService {
         }
 
         return isValidPassword;
+    }
+
+    public static boolean createTableInDatabase(){
+        String sql = "CREATE TABLE users (name VARCHAR(30), username VARCHAR(30), email VARCHAR(30), password)";
+        DatabaseUtilities.createConnection();
+        DatabaseUtilities.executeQuery(sql);
+        DatabaseUtilities.closeConnection();
+        return false;
     }
 
 }

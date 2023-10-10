@@ -1,14 +1,15 @@
 package miniProjects.login;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         start();
     }
 
-    public static void start(){
+    public static void start() throws SQLException, ClassNotFoundException {
         UserService userService = new UserService();
         Scanner scanner = new Scanner(System.in);
         String select;
@@ -32,6 +33,5 @@ public class LoginMain {
             }
         }while (!select.equals("3"));
 
-        scanner.close();
     }
 }
