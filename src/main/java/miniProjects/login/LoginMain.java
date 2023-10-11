@@ -1,10 +1,8 @@
 package miniProjects.login;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginMain {
-
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         start();
     }
@@ -32,6 +30,5 @@ public class LoginMain {
                     System.out.println("You have logged in incorrectly. Please try again");
             }
         }while (!select.equals("3"));
-
     }
 }

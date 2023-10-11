@@ -1,8 +1,5 @@
 package miniProjects.login;
-
-import miniProjects.DatabaseUtilities;
 import miniProjects.ReusableMethods;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,6 @@ public class UserService {
     }
 
     public void register() throws ClassNotFoundException, SQLException {
-
         //Get name
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Your Name and Surname");
@@ -66,22 +62,15 @@ public class UserService {
             isValidPassword = validatePassword(password);
         }while (!isValidPassword);
 
-        //Create users and add their information into the lists
-        User user = new User(name, username, email, password);
-        usernameList.add(username);
-        emailList.add(email);
-        passwordList.add(password);
-
         //Get connection to the local database and add users information into the local database
         List<User> users = new ArrayList<>();
         users.add(new User(name, username, email, password));
+
         Connection con = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/jdbc","postgres","Bekrarum3401-");
-
         Statement st = con.createStatement();
 
         String sql = "INSERT INTO users VALUES (?, ?, ?, ?)";
-
 
         PreparedStatement preparedStatement = con.prepareStatement(sql);
 
@@ -92,7 +81,6 @@ public class UserService {
             preparedStatement.setString(4, password);
 
             preparedStatement.addBatch();
-
         }
         preparedStatement.executeBatch();
 
@@ -103,19 +91,45 @@ public class UserService {
         System.out.println("-------------------------------------------------------------------------");
         ReusableMethods.slowPrint("Congratulations, your registration has been completed.", 50);
         System.out.println();
-        ReusableMethods.slowPrint("You can log in to the system with your username or email and password.", 50);
+        ReusableMethods.slowPrint("You can log in to the system with your username/email and password.", 50);
         System.out.println();
         System.out.println("-------------------------------------------------------------------------");
-
     }
 
-    public void login(){
+    public void login() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter username or email");
-        String usernameOrEmail = scanner.nextLine();
+        String givenUsernameOrEmail = scanner.nextLine();
 
-        boolean isEmail = emailList.contains(usernameOrEmail);
-        boolean isUsername = usernameList.contains(usernameOrEmail);
+        //Get connection to the local database and get data from the local database
+        Connection con = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","Bekrarum3401-");
+
+        Statement st = con.createStatement();
+
+        String sql1 = "SELECT username FROM users";
+        String sql2 = "SELECT email FROM users";
+        String sql3 = "SELECT password FROM users";
+
+        ResultSet rs1 = st.executeQuery(sql1);
+        while (rs1.next()){
+            usernameList.add(rs1.getString("username"));
+        }
+
+        ResultSet rs2 = st.executeQuery(sql2);
+        while (rs2.next()){
+            emailList.add(rs2.getString("email"));
+        }
+
+        ResultSet rs3 = st.executeQuery(sql3);
+        while (rs3.next()){
+            passwordList.add(rs3.getString("password"));
+        }
+        con.close();
+        st.close();
+
+        boolean isEmail = emailList.contains(givenUsernameOrEmail);
+        boolean isUsername = usernameList.contains(givenUsernameOrEmail);
 
         if (isEmail || isUsername){
             int counter = 5;
@@ -125,30 +139,37 @@ public class UserService {
 
                 int index;
                 if (isUsername){
-                    index = usernameList.indexOf(usernameOrEmail);
+                    index = usernameList.indexOf(givenUsernameOrEmail);
                 } else {
-                    index = emailList.indexOf(usernameOrEmail);
+                    index = emailList.indexOf(givenUsernameOrEmail);
                 }
 
                 if (passwordList.get(index).equals(password)){
+                    System.out.println("-------------------------------------------");
                     System.out.println("You logged in to the system successfully");
+                    System.out.println("--------------------------------------------");
                     break;
                 }else {
                     counter--;
                     if (counter>0){
+                        System.out.println("-----------------------------------------------");
                         System.out.println("You entered wrong password! Please try again");
                         System.out.println("Your remaining number of attempts: " + counter);
+                        System.out.println("------------------------------------------------");
                     }else {
+                        System.out.println("-------------------------------------------");
                         System.out.println("There is no remaining attempt. Good Bye!");
+                        System.out.println("-------------------------------------------");
                         break;
                     }
                 }
             }
         }else {
+            System.out.println("----------------------------------------------------");
             System.out.println("The user registered to the system was not found!");
             System.out.println("Please check your credentials or sign in");
+            System.out.println("-----------------------------------------------------");
         }
-
     }
 
     public static boolean validateEmail(String email){
@@ -182,7 +203,6 @@ public class UserService {
         return isValid;
     }
 
-
     public static boolean validatePassword(String password){
         boolean isValidPassword;
 
@@ -212,16 +232,6 @@ public class UserService {
         if (!isValidPassword){
             System.out.println("Please try again");
         }
-
         return isValidPassword;
     }
-
-    public static boolean createTableInDatabase(){
-        String sql = "CREATE TABLE users (name VARCHAR(30), username VARCHAR(30), email VARCHAR(30), password)";
-        DatabaseUtilities.createConnection();
-        DatabaseUtilities.executeQuery(sql);
-        DatabaseUtilities.closeConnection();
-        return false;
-    }
-
 }
