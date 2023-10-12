@@ -1,4 +1,4 @@
-package miniProjects;
+package javaProjects;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class DatabaseUtilities {
         public static void createConnection(){
         String url = "jdbc:postgresql://localhost:5432/jdbc";
         String user = "postgres";
-        String password = "Bekrarum3401-";
+        String password = "***********";
         try {
             connection = DriverManager.getConnection(url, user, password);
         }catch (SQLException e){

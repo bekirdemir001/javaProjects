@@ -1,4 +1,4 @@
-package miniProjects;
+package javaProjects;
 
 public class ReusableMethods {
     public static void slowPrint(String text, int delay){

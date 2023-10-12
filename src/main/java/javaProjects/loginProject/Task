@@ -5,7 +5,7 @@ Project:
     menu: A menu is displayed for user action selection
 
     register: Obtain name, surname, username and password information from the user.
-              Username, password and email are kept in a list.
+              Username, password and email are kept in a database.
               Same username or email is not accepted.
 
     login: Username/email and password are entered.
@@ -15,7 +15,8 @@ Project:
     email validation: No spaces
                       Contain @
                       Ends with gmail.com, hotmail.com or yahoo.com
-                      The username part of the email (the part before the @) can only contain uppercase and lowercase letters, numbers or symbols such as -,_.
+                      The username part of the email (the part before the @) can only contain uppercase and lowercase
+                      letters, numbers or symbols such as -,_.
 
     password validation: No spaces
                          At least 6 characters

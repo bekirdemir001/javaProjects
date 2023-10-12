@@ -1,5 +1,5 @@
-package miniProjects.login;
-import miniProjects.ReusableMethods;
+package javaProjects.loginProject;
+import javaProjects.ReusableMethods;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class UserService {
         System.out.println("Your selection: ");
     }
 
-    public void register() throws ClassNotFoundException, SQLException {
+    public void register() throws  SQLException {
         //Get name
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Your Name and Surname");
@@ -67,7 +67,7 @@ public class UserService {
         users.add(new User(name, username, email, password));
 
         Connection con = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/jdbc","postgres","Bekrarum3401-");
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","*************");
         Statement st = con.createStatement();
 
         String sql = "INSERT INTO users VALUES (?, ?, ?, ?)";

@@ -1,13 +1,13 @@
-package miniProjects.login;
+package javaProjects.loginProject;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class LoginMain {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+public class Runner {
+    public static void main(String[] args) throws SQLException {
         start();
     }
 
-    public static void start() throws SQLException, ClassNotFoundException {
+    public static void start() throws SQLException {
         UserService userService = new UserService();
         Scanner scanner = new Scanner(System.in);
         String select;

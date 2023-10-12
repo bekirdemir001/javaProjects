@@ -1,4 +1,4 @@
-package miniProjects.login;
+package javaProjects.loginProject;
 
 public class User {
 
@@ -13,7 +13,6 @@ public class User {
     }
 
 
-
     //This constructor is used for creating an object by using name, username, email and password
     public User(String name, String username, String email, String password) {
         this.name = name;
@@ -21,7 +20,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
 
 
     //Create an getter-setter methods
@@ -58,7 +56,6 @@ public class User {
     }
 
 
-
     //Create a toString method
     @Override
     public String toString() {
@@ -69,8 +66,4 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
-
-
-
-
 }
