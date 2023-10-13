@@ -103,7 +103,7 @@ public class UserService {
 
         //Get connection to the local database and get data from the local database
         Connection con = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/jdbc","postgres","Bekrarum3401-");
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","************");
 
         Statement st = con.createStatement();
 
