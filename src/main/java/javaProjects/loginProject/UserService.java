@@ -67,7 +67,7 @@ public class UserService {
         users.add(new User(name, username, email, password));
 
         Connection con = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/jdbc","postgres","*************");
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","***********");
         Statement st = con.createStatement();
 
         String sql = "INSERT INTO users VALUES (?, ?, ?, ?)";
@@ -103,7 +103,7 @@ public class UserService {
 
         //Get connection to the local database and get data from the local database
         Connection con = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/jdbc","postgres","************");
+                "jdbc:postgresql://localhost:5432/jdbc","postgres","**********");
 
         Statement st = con.createStatement();
 
@@ -146,7 +146,8 @@ public class UserService {
 
                 if (passwordList.get(index).equals(password)){
                     System.out.println("-------------------------------------------");
-                    System.out.println("You logged in to the system successfully");
+                    ReusableMethods.slowPrint("You logged in to the system successfully", 50);
+                    System.out.println();
                     System.out.println("--------------------------------------------");
                     break;
                 }else {

@@ -1,4 +1,6 @@
 package javaProjects.loginProject;
+import javaProjects.ReusableMethods;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -24,7 +26,10 @@ public class Runner {
                     userService.login();
                     break;
                 case "3":
-                    System.out.println("***** Have a Nice Day *****");
+                    System.out.println("----------------------------------------------------");
+                    ReusableMethods.slowPrint("***** Have a Nice Day *****", 50);
+                    System.out.println();
+                    System.out.println("-----------------------------------------------------");
                     break;
                 default:
                     System.out.println("You have logged in incorrectly. Please try again");
